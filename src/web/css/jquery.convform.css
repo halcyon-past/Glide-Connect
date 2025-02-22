@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+    background: #0a0a0f;
+    color: #fff;
+    width: 350px;
+    height: 480px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background: rgba(20, 20, 30, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 0.75rem;
+    height: 50px;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.brand-text {
+    font-size: 1.15rem;
+    font-weight: 700;
+    background: linear-gradient(-45deg, #ff3366, #4158D0, #43e97b);
+    background-size: 200% 200%;
+    --webkit-background-clip: text;
+    --webkit-text-fill-color: transparent;
+    animation: gradient 5s ease infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.chat-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: calc(480px - 50px - 60px); /* Total height - header - input container */
+    background: rgba(20, 20, 30, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+#messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+#messages::-webkit-scrollbar {
+    width: 4px;
+}
+
+#messages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+#messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 0.8rem;
+    border-radius: 12px;
+    position: relative;
+    animation: messageAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+@keyframes messageAppear {
+    0% { 
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.from {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #4158D0, #C850C0);
+    color: white;
+    margin-right: 0.5rem;
+}
+
+.message.to {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    margin-left: 0.5rem;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    padding: 0.75rem;
+    background: rgba(20, 20, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 5px 10px;
+    height: 40px;
+}
+
+#userInput {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    padding: 5px;
+    height: 30px; /* Fixed height */
+    min-height: 30px;
+    max-height: 30px;
+}
+
+#userInput::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#userInputButton {
+    background: linear-gradient(135deg, #4158D0, #C850C0);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    min-width: 30px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+#userInputButton:hover {
+    transform: scale(1.05);
+}
+
+#userInputButton:active {
+    transform: scale(0.95);
+}
+
+.shape {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.shape-1 {
+    background: #ff3366;
+    width: 150px;
+    height: 150px;
+    top: -75px;
+    left: -75px;
+}
+
+.shape-2 {
+    background: #4158D0;
+    width: 200px;
+    height: 200px;
+    bottom: -100px;
+    right: -100px;
+}
