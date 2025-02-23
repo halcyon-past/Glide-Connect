@@ -14,3 +14,6 @@ src/.vs/slnx.sqlite
 *.vs
 .vs/slnx.sqlite
 *.gif
+*.log
+*.env
+src/screenshot.png
