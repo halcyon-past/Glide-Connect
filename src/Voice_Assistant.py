@@ -16,6 +16,8 @@ from pynput.keyboard import Key, Controller
 import Gesture_Controller
 import app
 
+from GenAI import GeminiClient
+
 # Configure logging
 logger = logging.getLogger("KrishnaAssistant")
 logger.setLevel(logging.INFO)
@@ -27,7 +29,7 @@ console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s
 console_handler.setFormatter(console_formatter)
 
 # File handler
-file_handler = logging.FileHandler('krishna_assistant.log')
+file_handler = logging.FileHandler('logs/krishna_assistant.log')
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(console_formatter)
 
@@ -51,6 +53,8 @@ class KrishnaAssistant:
         self.files = []
         self.current_path = ''
         self.is_awake = True
+
+        self.client = GeminiClient()
 
         with sr.Microphone() as source:
             self.recognizer.energy_threshold = 500
@@ -133,6 +137,34 @@ class KrishnaAssistant:
             app.ChatBot.close()
             raise SystemExit
         
+        #GENAI Integration
+        elif 'enter divine mode' in voice_data:
+            self.reply('Entered Divine Mode')
+            self.reply('Ask Your Query')
+            temp_audio = self.record_audio()
+            app.eel.addUserMsg(temp_audio)
+            if 'look at my screen' in temp_audio:
+                self.reply('Analyzing Your Screen what do you want to know about it?')
+                temp_audio = self.record_audio()
+                app.eel.addUserMsg(temp_audio)
+                try:
+                    screenshot_path = self.client.take_screenshot()
+                    image_response = self.client.send_prompt_with_image(screenshot_path, temp_audio = self.record_audio())
+                    self.reply(image_response)
+                    logger.info("Krishna Response:",image_response)
+
+                except Exception as e:
+                    logger.error(f"An error occurred: {e}")
+            
+            else:
+                try:
+                    response = self.client.send_prompt(temp_audio)
+                    logger.info("Krishna Response:",response)
+                    self.reply(response)
+                except Exception as e:
+                    logger.error(f"An error occurred: {e}")
+
+        
         # Dynamic Commands
         elif 'launch gesture recognition' in voice_data:
             if Gesture_Controller.GestureController.gc_mode:
@@ -158,6 +190,7 @@ class KrishnaAssistant:
                 self.keyboard.press('v')
                 self.keyboard.release('v')
             self.reply("Pasted.")
+
         # File Navigation (Default Folder set to C://)
         elif 'list' in voice_data:
             self.current_path = 'C://'
