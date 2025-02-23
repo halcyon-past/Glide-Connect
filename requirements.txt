@@ -1,11 +1,15 @@
 pyttsx3==2.71
 SpeechRecognition==3.8.1
+numpy==1.26.4
 pynput==1.7.3
 pyautogui==0.9.53
-wikipedia==1.4.0
-opencv-python==4.5.3.56
+opencv-python==4.11.0.86
 mediapipe==0.10.11
 comtypes==1.1.11
 pycaw==20181226
 screen-brightness-control==0.9.0
 eel==0.14.0
+Pillow==10.0.0
+PyAudio==0.2.14
+Markdown==3.7
+google-generativeai==0.8.4
