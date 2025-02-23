@@ -42,8 +42,8 @@ body {
     font-weight: 700;
     background: linear-gradient(-45deg, #ff3366, #4158D0, #43e97b);
     background-size: 200% 200%;
-    --webkit-background-clip: text;
-    --webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     animation: gradient 5s ease infinite;
 }
 
