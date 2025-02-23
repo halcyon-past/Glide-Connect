@@ -147,9 +147,10 @@ class KrishnaAssistant:
                 self.reply('Analyzing Your Screen what do you want to know about it?')
                 temp_audio = self.record_audio()
                 app.eel.addUserMsg(temp_audio)
+                app.eel.sleep(30.0)
                 try:
                     screenshot_path = self.client.take_screenshot()
-                    image_response = self.client.send_prompt_with_image(screenshot_path, temp_audio = self.record_audio())
+                    image_response = self.client.send_prompt_with_image(screenshot_path, temp_audio)
                     self.reply(image_response)
                     logger.info("Krishna Response:",image_response)
 
