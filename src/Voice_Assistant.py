@@ -9,7 +9,6 @@ from os.path import isfile, join
 from threading import Thread
 
 import pyttsx3
-import pyautogui
 import speech_recognition as sr
 from pynput.keyboard import Key, Controller
 
