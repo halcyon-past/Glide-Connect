@@ -1,250 +1,257 @@
-import pyttsx3
-import speech_recognition as sr
-from datetime import date
+import logging
+import os
+import sys
 import time
 import webbrowser
-import datetime
-from pynput.keyboard import Key, Controller
-import pyautogui
-import sys
-import os
+from datetime import datetime, date
 from os import listdir
 from os.path import isfile, join
-import Gesture_Controller
-import app
 from threading import Thread
 
+import pyttsx3
+import pyautogui
+import speech_recognition as sr
+from pynput.keyboard import Key, Controller
 
-# -------------Object Initialization---------------
-today = date.today()
-r = sr.Recognizer()
-keyboard = Controller()
-engine = pyttsx3.init('sapi5')
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
+import Gesture_Controller
+import app
 
-# ----------------Variables------------------------
-file_exp_status = False
-files =[]
-path = ''
-is_awake = True  #Bot status
+# Configure logging
+logger = logging.getLogger("KrishnaAssistant")
+logger.setLevel(logging.INFO)
 
-# ------------------Functions----------------------
-def reply(audio):
-    app.ChatBot.addAppMsg(audio)
+# Console handler
+console_handler = logging.StreamHandler(sys.stdout)
+console_handler.setLevel(logging.INFO)
+console_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+console_handler.setFormatter(console_formatter)
 
-    print(audio)
-    engine.say(audio)
-    engine.runAndWait()
+# File handler
+file_handler = logging.FileHandler('krishna_assistant.log')
+file_handler.setLevel(logging.INFO)
+file_handler.setFormatter(console_formatter)
 
+# Add handlers to the logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+logger.propagate = False
 
-def wish():
-    hour = int(datetime.datetime.now().hour)
+class KrishnaAssistant:
+    """A virtual assistant that uses speech recognition, text-to-speech, and gesture control."""
 
-    if hour>=0 and hour<12:
-        reply("Good Morning!")
-    elif hour>=12 and hour<18:
-        reply("Good Afternoon!")   
-    else:
-        reply("Good Evening!")  
-        
-    reply("I am Krishna, I have the answers to all your questions?")
+    def __init__(self):
+        self.today = date.today()
+        self.recognizer = sr.Recognizer()
+        self.keyboard = Controller()
+        self.engine = pyttsx3.init('sapi5')
+        self.voices = self.engine.getProperty('voices')
+        self.engine.setProperty('voice', self.voices[0].id)
 
-# Set Microphone parameters
-with sr.Microphone() as source:
-        r.energy_threshold = 500 
-        r.dynamic_energy_threshold = False
+        self.file_exp_status = False
+        self.files = []
+        self.current_path = ''
+        self.is_awake = True
 
-# Audio to String
-def record_audio():
-    with sr.Microphone() as source:
-        r.pause_threshold = 0.8
-        voice_data = ''
-        audio = r.listen(source, phrase_time_limit=5)
+        with sr.Microphone() as source:
+            self.recognizer.energy_threshold = 500
+            self.recognizer.dynamic_energy_threshold = False
 
-        try:
-            voice_data = r.recognize_google(audio)
-        except sr.RequestError:
-            reply('Sorry my Service is down. Plz check your Internet connection')
-        except sr.UnknownValueError:
-            print('cant recognize')
-            pass
-        return voice_data.lower()
+    def reply(self, message: str) -> None:
+        app.ChatBot.addAppMsg(message)
+        logger.info(message)
+        self.engine.say(message)
+        self.engine.runAndWait()
 
-
-# Executes Commands (input: string)
-def respond(voice_data):
-    global file_exp_status, files, is_awake, path
-    print(voice_data)
-    voice_data.replace('krishna','')
-    app.eel.addUserMsg(voice_data)
-
-    if is_awake==False:
-        if 'wake up' in voice_data:
-            is_awake = True
-            wish()
-
-    # STATIC CONTROLS
-    elif 'hello' in voice_data:
-        wish()
-
-    elif 'what is your name' in voice_data:
-        reply('My name is Krishna!')
-
-    elif 'date' in voice_data:
-        reply(today.strftime("%B %d, %Y"))
-
-    elif 'time' in voice_data:
-        reply(str(datetime.datetime.now()).split(" ")[1].split('.')[0])
-
-    elif 'search' in voice_data:
-        reply('Searching for ' + voice_data.split('search')[1])
-        url = 'https://google.com/search?q=' + voice_data.split('search')[1]
-        try:
-            webbrowser.get().open(url)
-            reply('This is what I found Sir')
-        except:
-            reply('Please check your Internet')
-
-    elif 'location' in voice_data:
-        reply('Which place are you looking for ?')
-        temp_audio = record_audio()
-        app.eel.addUserMsg(temp_audio)
-        reply('Locating...')
-        url = 'https://google.nl/maps/place/' + temp_audio + '/&amp;'
-        try:
-            webbrowser.get().open(url)
-            reply('This is what I found Sir')
-        except:
-            reply('Please check your Internet')
-
-    elif ('bye' in voice_data) or ('by' in voice_data):
-        reply("Good bye Sir! Have a nice day.")
-        is_awake = False
-
-    elif ('exit' in voice_data) or ('terminate' in voice_data):
-        if Gesture_Controller.GestureController.gc_mode:
-            Gesture_Controller.GestureController.gc_mode = 0
-        app.ChatBot.close()
-        #sys.exit() always raises SystemExit, Handle it in main loop
-        sys.exit()
-        
-    
-    # DYNAMIC CONTROLS
-    elif 'launch gesture recognition' in voice_data:
-        if Gesture_Controller.GestureController.gc_mode:
-            reply('Gesture recognition is already active')
+    def wish(self) -> None:
+        current_hour = datetime.now().hour
+        if 0 <= current_hour < 12:
+            self.reply("Good Morning!")
+        elif 12 <= current_hour < 18:
+            self.reply("Good Afternoon!")
         else:
-            gc = Gesture_Controller.GestureController()
-            t = Thread(target = gc.start)
-            t.start()
-            reply('Launched Successfully')
+            self.reply("Good Evening!")
+        self.reply("I am Krishna, I have the answers to all your questions.")
 
-    elif ('stop gesture recognition' in voice_data) or ('top gesture recognition' in voice_data):
-        if Gesture_Controller.GestureController.gc_mode:
-            Gesture_Controller.GestureController.gc_mode = 0
-            reply('Gesture recognition stopped')
-        else:
-            reply('Gesture recognition is already inactive')
+    def record_audio(self) -> str:
+        with sr.Microphone() as source:
+            self.recognizer.pause_threshold = 0.8
+            try:
+                audio = self.recognizer.listen(source, phrase_time_limit=5)
+                voice_data = self.recognizer.recognize_google(audio)
+                return voice_data.lower()
+            except sr.RequestError:
+                self.reply("Sorry, my service is down. Please check your internet connection.")
+            except sr.UnknownValueError:
+                logger.warning("Unable to recognize audio.")
+            return ""
+
+    def respond(self, voice_data: str) -> None:
+        logger.info(f"Voice Input: {voice_data}")
+        voice_data = voice_data.replace('krishna', '').strip()
+        app.eel.addUserMsg(voice_data)
+
+        if not self.is_awake:
+            if 'wake up' in voice_data:
+                self.is_awake = True
+                self.wish()
+            return
+
+        if 'hello' in voice_data:
+            self.wish()
+        elif 'what is your name' in voice_data:
+            self.reply("My name is Krishna!")
+        elif 'date' in voice_data:
+            self.reply(self.today.strftime("%B %d, %Y"))
+        elif 'time' in voice_data:
+            current_time = datetime.now().strftime("%H:%M:%S")
+            self.reply(current_time)
+        elif 'location' in voice_data:
+            self.reply('Which place are you looking for ?')
+            temp_audio = self.record_audio()
+            app.eel.addUserMsg(temp_audio)
+            self.reply('Locating...')
+            url = 'https://google.nl/maps/place/' + temp_audio + '/&amp;'
+            try:
+                webbrowser.get().open(url)
+                self.reply('This is what I found Sir')
+            except:
+                self.reply('Please check your Internet')
+        elif 'search' in voice_data:
+            query = voice_data.split('search', 1)[1].strip()
+            self.reply(f"Searching for {query}")
+            url = f"https://google.com/search?q={query}"
+            try:
+                webbrowser.open(url)
+                self.reply("This is what I found, Sir.")
+            except Exception as e:
+                logger.error(f"Error opening web browser: {e}")
+                self.reply("Please check your internet connection.")
+        elif 'bye' in voice_data or 'by' in voice_data:
+            self.reply("Goodbye Sir! Have a nice day.")
+            self.is_awake = False
+        elif 'exit' in voice_data:
+            app.ChatBot.close()
+            raise SystemExit
         
-    elif 'copy' in voice_data:
-        with keyboard.pressed(Key.ctrl):
-            keyboard.press('c')
-            keyboard.release('c')
-        reply('Copied')
-          
-    elif 'page' in voice_data or 'pest'  in voice_data or 'paste' in voice_data:
-        with keyboard.pressed(Key.ctrl):
-            keyboard.press('v')
-            keyboard.release('v')
-        reply('Pasted')
-        
-    # File Navigation (Default Folder set to C://)
-    elif 'list' in voice_data:
-        counter = 0
-        path = 'C://'
-        files = listdir(path)
-        filestr = ""
-        for f in files:
-            counter+=1
-            print(str(counter) + ':  ' + f)
-            filestr += str(counter) + ':  ' + f + '<br>'
-        file_exp_status = True
-        reply('These are the files in your root directory')
-        app.ChatBot.addAppMsg(filestr)
-        
-    elif file_exp_status == True:
-        counter = 0   
-        if 'open' in voice_data:
-            if isfile(join(path,files[int(voice_data.split(' ')[-1])-1])):
-                os.startfile(path + files[int(voice_data.split(' ')[-1])-1])
-                file_exp_status = False
+        # Dynamic Commands
+        elif 'launch gesture recognition' in voice_data:
+            if Gesture_Controller.GestureController.gc_mode:
+                self.reply("Gesture recognition is already active.")
             else:
+                gc = Gesture_Controller.GestureController()
+                thread = Thread(target=gc.start)
+                thread.start()
+                self.reply("Launched successfully.")
+        elif 'stop gesture recognition' in voice_data or 'top gesture recognition' in voice_data:
+            if Gesture_Controller.GestureController.gc_mode:
+                Gesture_Controller.GestureController.gc_mode = 0
+                self.reply("Gesture recognition stopped.")
+            else:
+                self.reply("Gesture recognition is already inactive.")
+        elif 'copy' in voice_data:
+            with self.keyboard.pressed(Key.ctrl):
+                self.keyboard.press('c')
+                self.keyboard.release('c')
+            self.reply("Copied.")
+        elif 'paste' in voice_data or 'page' in voice_data or 'pest' in voice_data:
+            with self.keyboard.pressed(Key.ctrl):
+                self.keyboard.press('v')
+                self.keyboard.release('v')
+            self.reply("Pasted.")
+        # File Navigation (Default Folder set to C://)
+        elif 'list' in voice_data:
+            self.current_path = 'C://'
+            try:
+                self.files = listdir(self.current_path)
+                files_str = ""
+                for idx, file in enumerate(self.files, start=1):
+                    files_str += f"{idx}: {file}<br>"
+                    logging.info(f"{idx}: {file}")
+                self.file_exp_status = True
+                self.reply("These are the files in your root directory.")
+                app.ChatBot.addAppMsg(files_str)
+            except Exception as e:
+                logging.error(f"Error listing files in {self.current_path}: {e}")
+                self.reply("Unable to list files.")
+        elif self.file_exp_status:
+            if 'open' in voice_data:
                 try:
-                    path = path + files[int(voice_data.split(' ')[-1])-1] + '//'
-                    files = listdir(path)
-                    filestr = ""
-                    for f in files:
-                        counter+=1
-                        filestr += str(counter) + ':  ' + f + '<br>'
-                        print(str(counter) + ':  ' + f)
-                    reply('Opened Successfully')
-                    app.ChatBot.addAppMsg(filestr)
-                    
-                except:
-                    reply('You do not have permission to access this folder')
-                                    
-        if 'back' in voice_data:
-            filestr = ""
-            if path == 'C://':
-                reply('Sorry, this is the root directory')
+                    index = int(voice_data.split()[-1]) - 1
+                    selected_file = self.files[index]
+                    file_path = os.path.join(self.current_path, selected_file)
+                    if isfile(file_path):
+                        os.startfile(file_path)
+                        self.file_exp_status = False
+                    else:
+                        # Update directory navigation if the selection is a folder
+                        self.current_path = os.path.join(self.current_path, selected_file, '')
+                        self.files = listdir(self.current_path)
+                        files_str = ""
+                        for idx, file in enumerate(self.files, start=1):
+                            files_str += f"{idx}: {file}<br>"
+                            logging.info(f"{idx}: {file}")
+                        self.reply("Opened successfully.")
+                        app.ChatBot.addAppMsg(files_str)
+                except Exception as e:
+                    logging.error(f"Error opening file or directory: {e}")
+                    self.reply("You do not have permission to access this folder or the selection is invalid.")
+            elif 'back' in voice_data:
+                if self.current_path == 'C://':
+                    self.reply("Sorry, this is the root directory.")
+                else:
+                    try:
+                        # Remove the last directory from the current path
+                        path_parts = self.current_path.rstrip(os.sep).split(os.sep)
+                        new_path = os.sep.join(path_parts[:-1]) + os.sep
+                        self.current_path = new_path
+                        self.files = listdir(self.current_path)
+                        files_str = ""
+                        for idx, file in enumerate(self.files, start=1):
+                            files_str += f"{idx}: {file}<br>"
+                            logging.info(f"{idx}: {file}")
+                        self.reply("Going back.")
+                        app.ChatBot.addAppMsg(files_str)
+                    except Exception as e:
+                        logging.error(f"Error navigating back: {e}")
+                        self.reply("Unable to go back in the directory structure.")
+        else:
+            self.reply("I am not programmed to do this.")
+
+    def run(self) -> None:
+        chatbot_thread = Thread(target=app.ChatBot.start)
+        chatbot_thread.start()
+
+        while not app.ChatBot.started:
+            time.sleep(0.5)
+
+        self.wish()
+        while True:
+            logger.info("Waiting for voice input...")
+            if app.ChatBot.isUserInput():
+                logger.info("Received input from GUI")
+                voice_data = app.ChatBot.popUserInput()
             else:
-                a = path.split('//')[:-2]
-                path = '//'.join(a)
-                path += '//'
-                files = listdir(path)
-                for f in files:
-                    counter+=1
-                    filestr += str(counter) + ':  ' + f + '<br>'
-                    print(str(counter) + ':  ' + f)
-                reply('ok')
-                app.ChatBot.addAppMsg(filestr)
-                   
-    else: 
-        reply('I am not functioned to do this !')
+                logger.info("Recording voice...")
+                voice_data = self.record_audio()
+            logger.info(f"Voice data: {voice_data}")
 
-# ------------------Driver Code--------------------
+            if "krishna" in voice_data:
+                try:
+                    logger.info("Responding to voice input...")
+                    self.respond(voice_data)
+                except SystemExit:
+                    self.reply("Exit successful.")
+                    break
+                except Exception as e:
+                    logger.error(f"Exception occurred: {e}")
+                    break
 
-t1 = Thread(target = app.ChatBot.start)
-t1.start()
+def main():
+    try:
+        assistant = KrishnaAssistant()
+        assistant.run()
+    except Exception as e:
+        logger.critical(f"Critical error encountered: {e}")
 
-# Lock main thread until Chatbot has started
-while not app.ChatBot.started:
-    time.sleep(0.5)
-
-wish()
-voice_data = None
-while True:
-    if app.ChatBot.isUserInput():
-        #take input from GUI
-        voice_data = app.ChatBot.popUserInput()
-    else:
-        #take input from Voice
-        voice_data = record_audio()
-
-    #process voice_data
-    if 'krishna' in voice_data:
-        try:
-            #Handle sys.exit()
-            respond(voice_data)
-        except SystemExit:
-            reply("Exit Successfull")
-            break
-        except:
-            #some other exception got raised
-            print("EXCEPTION raised while closing.") 
-            break
-        
-
-
+if __name__ == "__main__":
+    main()
