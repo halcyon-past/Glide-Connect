@@ -183,6 +183,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 # Team
   | Name | Github  | Email | Linkedin | Instagram |
   | ------------- | ------------- | ------------- | ------------- | ------------- |
-  | Aritro Saha | [GitHub](https://github.com/halcyon-past) | [Email](titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) |
+  | Aritro Saha | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) |
 
   
