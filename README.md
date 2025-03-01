@@ -184,5 +184,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
   | Name | Github  | Email | Linkedin | Instagram | Youtube |
   | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
   | Aritro Saha | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
-
+  | Rupkatha De | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
+  | Anusmita Panji | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
   
