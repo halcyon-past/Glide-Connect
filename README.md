@@ -1,4 +1,4 @@
-# Virtual Mouse Control With Gesture Recognition and Voice Assistant
+# Virtual Mouse Control With Gesture Recognition and Voice Assistant [![](https://img.shields.io/badge/python-3.9.21-blue.svg)](https://www.python.org/downloads/) [![platform](https://img.shields.io/badge/platform-windows-green.svg)](https://www.microsoft.com/en-in/windows?r=1) 
 
 A Final Year Project for VIT, this project demonstrates a novel way to control a computer interface using hand gestures and voice commands. It leverages MediaPipe for real-time gesture recognition, integrates a custom voice assistant named **Krishna**, and incorporates generative AI (using Google Gemini) for enhanced query responses. The system offers an alternative and accessible method of interaction by combining gesture recognition and voice control in a unified platform.
 
