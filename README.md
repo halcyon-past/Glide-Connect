@@ -6,16 +6,26 @@ A Final Year Project for VIT, this project demonstrates a novel way to control a
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
+- [Virtual Mouse Control With Gesture Recognition and Voice Assistant  ](#virtual-mouse-control-with-gesture-recognition-and-voice-assistant--)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Features](#features)
+    - [Gesture Recognition](#gesture-recognition)
+    - [Voice Assistant (Krishna)](#voice-assistant-krishna)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+    - [Clone the Repository](#clone-the-repository)
+    - [Environment Setup](#environment-setup)
+    - [Configuration](#configuration)
+  - [Usage](#usage)
+    - [Running the Voice Assistant](#running-the-voice-assistant)
+    - [Running Only Gesture Recognition](#running-only-gesture-recognition)
+  - [Project Structure](#project-structure)
+  - [Future Enhancements](#future-enhancements)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Acknowledgements](#acknowledgements)
+- [Team](#team)
 
 ---
 
@@ -184,6 +194,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
   | Name | Github  | Email | Linkedin | Instagram | Youtube |
   | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
   | Aritro Saha | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
-  | Rupkatha De | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
-  | Anusmita Panji | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
+  | Rupkatha De | [GitHub](https://github.com/rupkatha-de) | [Email](mailto:derupkatha@gmail.com) | [LinkedIn](https://www.linkedin.com/in/rupkatha-de-80a422231/) | [Instagram](https://www.instagram.com/rupkatha_26/) | NA |
+  | Anusmita Panji | NA | [Email](mailto:kolianusmita@gmail.com) | [LinkedIn](https://www.linkedin.com/in/anusmita-panji-a509551b5) | [Instagram](https://www.instagram.com/anusmitap_21/) | NA |
   
