@@ -165,6 +165,13 @@ The system will start the webcam feed for gesture recognition. For voice command
 
 ---
 
+## Contributors
+<a href="https://github.com/halcyon-past/Glide-Connect/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=halcyon-past/Glide-Connect" />
+</a>
+
+---
+
 ## Contributing
 
 Contributions are welcome! If you would like to contribute to this project:
