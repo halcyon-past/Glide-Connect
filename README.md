@@ -22,6 +22,7 @@ A Final Year Project for VIT, this project demonstrates a novel way to control a
     - [Running Only Gesture Recognition](#running-only-gesture-recognition)
   - [Project Structure](#project-structure)
   - [Future Enhancements](#future-enhancements)
+  - [Contributors](#contributors)
   - [Contributing](#contributing)
   - [License](#license)
   - [Acknowledgements](#acknowledgements)
