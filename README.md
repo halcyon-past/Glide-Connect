@@ -145,7 +145,7 @@ The system will start the webcam feed for gesture recognition. For voice command
 │   ├── Gesture_Controller.py # Code for capturing and processing hand gestures using MediaPipe.
 │   ├── GenAI.py             # Integration with Google Gemini generative AI.
 │   ├── app.py               # Eel-based GUI for the chat interface.
-│   └── web/                # contains the files for the UI of the chatbot
+│   ├── web/                # contains the files for the UI of the chatbot
 │   └── logs/       # Contains logs of the chatbot
 ```
 
