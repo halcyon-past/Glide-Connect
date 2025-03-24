@@ -5,7 +5,7 @@ import time
 import webbrowser
 from datetime import datetime, date
 from os import listdir
-from os.path import isfile, join
+from os.path import isfile
 from threading import Thread
 
 import pyttsx3
