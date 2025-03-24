@@ -2,6 +2,8 @@ pyttsx3==2.71
 SpeechRecognition==3.8.1
 numpy==1.26.4
 pynput==1.7.3
+dotenv==0.9.9
+beautifulsoup4==4.13.3
 pyautogui==0.9.53
 opencv-python==4.11.0.86
 mediapipe==0.10.11
