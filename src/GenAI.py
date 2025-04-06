@@ -13,7 +13,7 @@ class GeminiClient:
     This client can send a text-only prompt or a prompt accompanied by an image.
     """
 
-    def __init__(self, api_key: str = None, model_name: str = "gemini-1.5-flash-8b", generation_config: dict = None):
+    def __init__(self, api_key: str = None, model_name: str = None, generation_config: dict = None):
         load_dotenv()
         # Retrieve API key from parameter or environment variable.
         if not api_key:
@@ -22,6 +22,12 @@ class GeminiClient:
             except KeyError:
                 raise ValueError("GEMINI_API_KEY not found in environment variables.")
         genai.configure(api_key=api_key)
+
+        if not model_name:
+            try:
+                model_name = os.environ["GEMINI_MODEL_NAME"]
+            except KeyError:
+                raise ValueError("GEMINI_MODEL_NAME not found in environment variables.")
 
         # Set up logging for the client.
         self.logger = logging.getLogger(__name__)
