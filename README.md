@@ -106,7 +106,9 @@ For detailed instructions on cloning, visit [GitHub's documentation](https://doc
    - Create a `.env` file with the following content:
      ```bash
      GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
+     GEMINI_MODEL_NAME=<YOUR_GEMINI_MODEL_NAME>
      ```
+     > Currently i am using "gemini-2.0-flash-lite" as my model since it is cheap and fast
    - To generate a Gemini API Key, visit [Google AI Studio](https://aistudio.google.com/apikey).
 
 2. **Navigate to the `src` Folder:**
