@@ -13,15 +13,12 @@ class ChatBot:
     def popUserInput():
         return ChatBot.userinputQueue.get()
 
-    def close_callback(route, websockets):
-        # if not websockets:
-        #     print('Bye!')
+    def close_callback(route):
         exit()
 
     @eel.expose
     def getUserInput(msg):
         ChatBot.userinputQueue.put(msg)
-        print(msg)
     
     def close():
         ChatBot.started = False
@@ -49,7 +46,6 @@ class ChatBot:
                 try:
                     eel.sleep(10.0)
                 except:
-                    #main thread exited
                     break
         
         except:

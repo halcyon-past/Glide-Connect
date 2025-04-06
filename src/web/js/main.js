@@ -9,6 +9,11 @@ document.getElementById("userInput").addEventListener("keyup", function(event) {
 
 eel.expose(addUserMsg);
 eel.expose(addAppMsg);
+eel.expose(closeWindow);
+
+function closeWindow() {
+    window.close();
+}
 
 function addUserMsg(msg) {
     const element = document.getElementById("messages");
