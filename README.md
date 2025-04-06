@@ -21,6 +21,7 @@ A Final Year Project for VIT, this project demonstrates a novel way to control a
     - [Running the Voice Assistant](#running-the-voice-assistant)
     - [Running Only Gesture Recognition](#running-only-gesture-recognition)
   - [Voice Commands](#voice-commands)
+  - [Hand Gesture Controls](#hand-gesture-controls)
   - [Project Structure](#project-structure)
   - [Future Enhancements](#future-enhancements)
   - [Contributors](#contributors)
@@ -40,13 +41,12 @@ The Virtual Mouse project reimagines human-computer interaction by providing a g
 ## Features
 
 ### Gesture Recognition
-- **Neutral Gesture**: Default state.
-- **Move Cursor**: Real-time hand tracking to move the mouse pointer.
-- **Click Operations**: Left click, right click, and double click.
-- **Scrolling**: Vertical and horizontal scrolling.
-- **Drag and Drop**: Using hand gestures to initiate and complete drag actions.
-- **Multiple Item Selection**: Select multiple items using specific gestures.
-- **Volume and Brightness Control**: Adjust system settings via pinch gestures.
+- **Cursor Control:** Move the mouse pointer using hand movements.
+- **Click Operations:** Perform left, right, and double clicks with specific finger gestures.
+- **Scrolling:** Scroll vertically and horizontally using pinch gestures.
+- **Drag and Drop:** Use a fist gesture to click and drag items.
+- **System Controls:** Adjust system volume and screen brightness using pinch gestures with the dominant hand.
+- **Multi-Hand Distinction:** Differentiates between Major (default: Right) and Minor (default: Left) hands for different gesture functionalities.
 
 ### Voice Assistant (Krishna)
 - **Launch/Stop Gesture Recognition**: Voice commands to control the gesture recognition module.
@@ -62,7 +62,7 @@ The Virtual Mouse project reimagines human-computer interaction by providing a g
 ## Prerequisites
 
 - **Python Version:** 3.9.21
-- **Operating System:** Windows (with required modules like `pywin32`)
+- **Operating System:** Windows (with required modules like `pywin32`, `pycaw`, `screen_brightness_control`)
 - **Tools:** Anaconda Distribution (recommended for environment management)
 - **Hardware:**
   - Webcam for gesture recognition
@@ -120,104 +120,114 @@ For detailed instructions on cloning, visit [GitHub's documentation](https://doc
 ## Usage
 
 ### Running the Voice Assistant
-To launch the integrated voice assistant (which also allows controlling gesture recognition):
+To launch the integrated voice assistant (which also allows controlling gesture recognition via voice):
 ```bash
 python Voice_Assistant.py
 ```
-The assistant will greet you and display a chat interface. You can interact via voice or by typing in the chat window.
+The assistant will greet you and display a chat interface. You can interact via voice or by typing in the chat window. The gesture control window will open automatically if launched via voice command ("launch gesture recognition").
 
 ### Running Only Gesture Recognition
 To run gesture recognition independently without the voice assistant:
 ```bash
 python Gesture_Controller.py
 ```
-The system will start the webcam feed for gesture recognition. Ensure your microphone is set up correctly if using voice commands with the main assistant.
+This will open a window showing the camera feed with hand landmarks. Press `Enter` in the OpenCV window to close it.
 
 ---
 
 ## Voice Commands
 
-Interact with the Krishna assistant using the following voice commands. You can also type these commands into the chat interface. *(Note: While the wake word "Krishna" isn't strictly necessary for every command due to current logic, using it is good practice).*
+Interact with the Krishna assistant using the following voice commands. You can also type these commands into the chat interface.
 
 * **`hello`**
-    * **Action:** Greets the user based on the current time (Good Morning, Afternoon, or Evening).
+    * **Action:** Greets the user based on the current time.
     * **Example:** "Krishna, hello"
-
 * **`what is your name`**
-    * **Action:** The assistant states its name.
+    * **Action:** States its name.
     * **Example:** "Krishna, what is your name?"
-
-* **`date`**
-    * **Action:** Replies with the current date.
-    * **Example:** "Krishna, what is the date today?"
-
-* **`time`**
-    * **Action:** Replies with the current time.
-    * **Example:** "Krishna, what time is it?"
-
+* **`date` / `time`**
+    * **Action:** Replies with the current date or time.
+    * **Example:** "Krishna, what's the date?" / "Krishna, tell me the time"
 * **`location`**
-    * **Action:** Asks the user for a place name, then opens Google Maps to that location in a web browser.
-    * **Example:** "Krishna, find a location" (Assistant will ask: "Which place are you looking for?") -> User replies: "Eiffel Tower"
-
+    * **Action:** Asks for a place, then opens Google Maps.
+    * **Example:** "Krishna, find a location" -> (Assistant asks) -> User: "Paris"
 * **`search [query]`**
-    * **Action:** Performs a Google search for the text following the word "search".
-    * **Example:** "Krishna, search for the latest Python news"
-
-* **`copy`**
-    * **Action:** Simulates pressing Ctrl+C (copy command).
-    * **Example:** "Krishna, copy this"
-
-* **`paste` / `page` / `pest`**
-    * **Action:** Simulates pressing Ctrl+V (paste command). Recognizes common misinterpretations.
-    * **Example:** "Krishna, paste here"
-
+    * **Action:** Performs a Google search.
+    * **Example:** "Krishna, search for generative AI"
+* **`copy` / `paste`**
+    * **Action:** Simulates Ctrl+C or Ctrl+V.
+    * **Example:** "Krishna, copy this" / "Krishna, paste here"
 * **`launch gesture recognition`**
-    * **Action:** Starts the gesture controller module in a separate thread if it's not already running.
+    * **Action:** Starts the gesture controller module.
     * **Example:** "Krishna, launch gesture recognition"
-
-* **`stop gesture recognition` / `top gesture recognition`**
-    * **Action:** Stops the currently running gesture controller module. Recognizes common misinterpretations.
+* **`stop gesture recognition`**
+    * **Action:** Stops the gesture controller module.
     * **Example:** "Krishna, stop gesture recognition"
-
-* **`list`**
-    * **Action:** Enters "File Explorer Mode". Lists the files and folders in the `C://` drive, numbering them. Subsequent `open` and `back` commands work within this mode.
-    * **Example:** "Krishna, list files"
-
-* **`open [number]`** (Only in File Explorer Mode)
-    * **Action:** Opens the file or navigates into the folder corresponding to the number provided after the `list` command. Updates the listed files if a folder is opened. Exits File Explorer Mode if a file is opened.
-    * **Example:** (After `list` shows "3: Documents") "Krishna, open 3"
-
-* **`back`** (Only in File Explorer Mode)
-    * **Action:** Navigates to the parent directory of the current path shown in File Explorer Mode and lists its contents. Does nothing if already at `C://`.
-    * **Example:** "Krishna, go back"
-
-* **`enter divine mode`**
-    * **Action:** Enters a special mode where subsequent queries (until "exit divine mode") are sent to the Google Gemini AI for a generative response.
-    * **Example:** "Krishna, enter divine mode"
-
-* **`exit divine mode`** (Only in Divine Mode)
-    * **Action:** Exits Divine Mode and returns to normal command processing.
-    * **Example:** "Exit divine mode"
-
-* **`look at my screen`** (Only in Divine Mode)
-    * **Action:** Takes a screenshot of the current screen, asks the user what they want to know about it, and sends both the image and the user's follow-up question to the Google Gemini AI for analysis and response.
-    * **Example:** "Look at my screen" (Assistant will ask: "What do you want to know about it?") -> User replies: "Summarize the text in this article"
-
-* **`bye` / `by`**
-    * **Action:** The assistant says goodbye and enters a "sleep" state (`is_awake = False`). It will only respond to the "wake up" command.
-    * **Example:** "Krishna, bye bye"
-
-* **`wake up`** (Only when in sleep state)
-    * **Action:** Wakes the assistant from its sleep state, allowing it to process commands normally again.
-    * **Example:** "Krishna, wake up"
-
+* **`list` / `open [number]` / `back`**
+    * **Action:** Navigates the file system starting from `C://`. `list` shows files/folders, `open [number]` opens the item, `back` goes to the parent directory.
+    * **Example:** "Krishna, list" -> "Krishna, open 2" -> "Krishna, go back"
+* **`enter divine mode` / `exit divine mode`**
+    * **Action:** Enters/exits mode for querying the Gemini AI.
+    * **Example:** "Krishna, enter divine mode" -> (Ask question) -> "Exit divine mode"
+* **`look at my screen`** (In Divine Mode)
+    * **Action:** Takes screenshot, asks for prompt, sends both to Gemini.
+    * **Example:** "Look at my screen" -> (Assistant asks) -> User: "What does this error message mean?"
+* **`bye` / `wake up`**
+    * **Action:** Puts the assistant to sleep / wakes it up.
+    * **Example:** "Krishna, bye" -> (Later) -> "Krishna, wake up"
 * **`exit`**
-    * **Action:** The assistant says goodbye and shuts down the application, including the GUI.
+    * **Action:** Shuts down the assistant application.
     * **Example:** "Krishna, exit now"
 
-* **(Any other unrecognized command)**
-    * **Action:** The assistant replies with "I am not programmed to do this."
-    * **Example:** "Krishna, make me coffee" -> Assistant: "I am not programmed to do this."
+---
+
+## Hand Gesture Controls
+
+Control your computer using hand gestures detected by the webcam. The system differentiates between your **Major hand** (dominant, default: Right) and **Minor hand** (non-dominant, default: Left). A window titled 'Gesture Controller' shows the camera feed and detected landmarks. *Note: Gestures require holding the pose for a few frames (~4) for stability before triggering an action.*
+
+* **Neutral (Palm / Other)**
+    * **Gesture:** Open hand (palm facing camera) or any unrecognized gesture.
+    * **Action:** No action. Resets states like "ready-to-click". The cursor does not move in this state.
+    * **Hand:** Either
+
+* **Move Cursor / Ready (V Gesture)**
+    * **Gesture:** Extend Index and Middle fingers ('V' sign), keep others closed.
+    * **Action:** Moves the mouse cursor according to hand movement. Sets the system to a "ready" state for click actions.
+    * **Hand:** Major
+
+* **Drag (Fist)**
+    * **Gesture:** Close all fingers into a fist.
+    * **Action:** Simulates holding down the left mouse button. Move the fist to drag. Releasing the fist (e.g., opening to Palm) releases the mouse button.
+    * **Hand:** Major
+
+* **Left Click (Middle Finger after V)**
+    * **Gesture:** Start with the V Gesture (Index and Middle up). Lower the Index finger, leaving only the Middle finger extended.
+    * **Action:** Performs a single left mouse click. Resets the "ready" state.
+    * **Hand:** Major
+
+* **Right Click (Index Finger after V)**
+    * **Gesture:** Start with the V Gesture. Lower the Middle finger, leaving only the Index finger extended.
+    * **Action:** Performs a single right mouse click. Resets the "ready" state.
+    * **Hand:** Major
+
+* **Double Click (Closed V after V)**
+    * **Gesture:** Start with the V Gesture. Bring the tips of the Index and Middle fingers close together while keeping them extended.
+    * **Action:** Performs a double left mouse click. Resets the "ready" state.
+    * **Hand:** Major
+
+* **Scroll (Minor Hand Pinch)**
+    * **Gesture:** Bring the tips of the Thumb and Index finger close together (pinch).
+    * **Action:**
+        * Moving the pinched hand **vertically** scrolls the active window up or down.
+        * Moving the pinched hand **horizontally** scrolls the active window left or right (simulates Shift + Scroll).
+    * **Hand:** Minor
+
+* **System Control (Major Hand Pinch)**
+    * **Gesture:** Bring the tips of the Thumb and Index finger close together (pinch).
+    * **Action:**
+        * Moving the pinched hand **vertically** increases (up) or decreases (down) the system volume.
+        * Moving the pinched hand **horizontally** increases (right) or decreases (left) the screen brightness.
+    * **Hand:** Major
 
 ---
 
@@ -228,28 +238,28 @@ Interact with the Krishna assistant using the following voice commands. You can 
 ├── requirements.txt
 ├── .env                  # Contains GEMINI_API_KEY
 ├── src
-│   ├── Voice_Assistant.py   # Main entry for voice assistant and integration with gesture control.
-│   ├── Gesture_Controller.py # Code for capturing and processing hand gestures using MediaPipe.
+│   ├── Voice_Assistant.py   # Main entry for voice assistant and integration.
+│   ├── Gesture_Controller.py # Handles gesture detection and control logic.
 │   ├── GenAI.py             # Integration with Google Gemini generative AI.
 │   ├── app.py               # Eel-based GUI for the chat interface.
 │   ├── web/                 # Contains the files for the UI of the chatbot
 │   └── logs/                # Contains logs of the chatbot
 ```
 
-- **Voice_Assistant.py:** Combines voice recognition with gesture commands and handles system commands.
-- **Gesture_Controller.py:** Implements hand gesture detection and corresponding mouse controls.
-- **GenAI.py:** Manages API interactions with Google Gemini for text and image-based generative responses.
-- **app.py:** Provides the graphical user interface for user interaction via Eel.
+- **Voice_Assistant.py:** Combines voice recognition, GUI interaction, and calls other modules.
+- **Gesture_Controller.py:** Implements hand gesture detection using MediaPipe and maps gestures to `pyautogui`, `pycaw`, and `screen_brightness_control` actions.
+- **GenAI.py:** Manages API interactions with Google Gemini.
+- **app.py:** Provides the graphical user interface using Eel.
 
 ---
 
 ## Future Enhancements
 
 - **Multi-Language Support:** Extend voice commands to support additional languages.
-- **Improved Gesture Set:** Introduce more complex gestures for additional functionalities.
-- **Performance Optimization:** Fine-tune gesture detection algorithms for lower latency.
-- **User Personalization:** Adapt the interface and commands based on individual user preferences.
-- **Mobile Integration:** Develop companion mobile applications for broader accessibility.
+- **Customizable Gestures:** Allow users to define or modify gesture mappings.
+- **Performance Optimization:** Fine-tune gesture detection and controller responsiveness.
+- **Cross-Platform Compatibility:** Adapt system controls (volume, brightness) for macOS/Linux.
+- **User Personalization:** Save user preferences (e.g., dominant hand, sensitivity).
 
 ---
 
@@ -281,9 +291,10 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Acknowledgements
 
-- **MediaPipe:** For providing a robust framework for gesture detection.
+- **MediaPipe:** For providing the hand tracking framework.
 - **Google Gemini:** For the generative AI capabilities.
-- **Open Source Community:** For the many libraries and tools that made this project possible.
+- **PyAutoGUI, PyCAW, screen-brightness-control:** For enabling system interaction.
+- **Open Source Community:** For the many libraries and tools used.
 
 # Team
   | Name | Github  | Email | Linkedin | Instagram | Youtube |
