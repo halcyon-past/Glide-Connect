@@ -3,6 +3,13 @@
 A Final Year Project for VIT, this project demonstrates a novel way to control a computer interface using hand gestures and voice commands. It leverages MediaPipe for real-time gesture recognition, integrates a custom voice assistant named **Krishna**, and incorporates generative AI (using Google Gemini) for enhanced query responses. The system offers an alternative and accessible method of interaction by combining gesture recognition and voice control in a unified platform.
 
 ---
+## Research Paper
+[IJIRT RESEARCH PAPER - KrishnaVision: A Multimodal Virtual Interface Combining MediaPipe-Hands Optimization and Gemini AI for Context- Aware HCI](https://ijirt.org/article?manuscript=180711)
+
+### citation
+R. De and A. Saha, "KrishnaVision: A Multimodal Virtual Interface  Combining MediaPipe-Hands Optimization and Gemini  AI for Context- Aware HCI," International Journal of Innovative Research in Technology (IJIRT), vol. 12, no. 1, pp. 2909–2917, 2025.
+
+---
 
 ## Table of Contents
 
