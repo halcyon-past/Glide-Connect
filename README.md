@@ -1,313 +1,210 @@
-# Virtual Mouse Control With Gesture Recognition and Voice Assistant [![](https://img.shields.io/badge/python-3.9.21-blue.svg)](https://www.python.org/downloads/) [![platform](https://img.shields.io/badge/platform-windows-green.svg)](https://www.microsoft.com/en-in/windows?r=1)
+# KrishnaVision (Glide-Connect)
 
-A Final Year Project for VIT, this project demonstrates a novel way to control a computer interface using hand gestures and voice commands. It leverages MediaPipe for real-time gesture recognition, integrates a custom voice assistant named **Krishna**, and incorporates generative AI (using Google Gemini) for enhanced query responses. The system offers an alternative and accessible method of interaction by combining gesture recognition and voice control in a unified platform.
+<div align="center">
 
----
-## Research Paper
-[IJIRT RESEARCH PAPER - KrishnaVision: A Multimodal Virtual Interface Combining MediaPipe-Hands Optimization and Gemini AI for Context- Aware HCI](https://ijirt.org/article?manuscript=180711)
+### A Multimodal Virtual Interface Combining MediaPipe-Hands Optimization and Gemini AI for Context-Aware Human-Computer Interaction
 
-### citation
-R. De and A. Saha, "KrishnaVision: A Multimodal Virtual Interface  Combining MediaPipe-Hands Optimization and Gemini  AI for Context- Aware HCI," International Journal of Innovative Research in Technology (IJIRT), vol. 12, no. 1, pp. 2909–2917, 2025.
+[![Python 3.9](https://img.shields.io/badge/python-3.9.21-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Platform Windows](https://img.shields.io/badge/platform-Windows-0078D6.svg?style=flat&logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+[![Paper IJIRT](https://img.shields.io/badge/Research_Paper-IJIRT_2025-orange.svg?style=flat)](https://ijirt.org/article?manuscript=180711)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
-
-## Table of Contents
-
-- [Virtual Mouse Control With Gesture Recognition and Voice Assistant  ](#virtual-mouse-control-with-gesture-recognition-and-voice-assistant--)
-  - [Table of Contents](#table-of-contents)
-  - [Introduction](#introduction)
-  - [Features](#features)
-    - [Gesture Recognition](#gesture-recognition)
-    - [Voice Assistant (Krishna)](#voice-assistant-krishna)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-    - [Clone the Repository](#clone-the-repository)
-    - [Environment Setup](#environment-setup)
-    - [Configuration](#configuration)
-  - [Usage](#usage)
-    - [Running the Voice Assistant](#running-the-voice-assistant)
-    - [Running Only Gesture Recognition](#running-only-gesture-recognition)
-  - [Voice Commands](#voice-commands)
-  - [Hand Gesture Controls](#hand-gesture-controls)
-  - [Project Structure](#project-structure)
-  - [Future Enhancements](#future-enhancements)
-  - [Contributors](#contributors)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Acknowledgements](#acknowledgements)
-- [Team](#team)
+</div>
 
 ---
 
-## Introduction
+## 📌 Overview
 
-The Virtual Mouse project reimagines human-computer interaction by providing a gesture- and voice-controlled interface. With this project, users can perform various mouse operations like cursor movement, clicks, scrolling, and system adjustments (volume and brightness) using hand gestures captured via a webcam. Additionally, the integrated voice assistant, **Krishna**, extends functionality by enabling voice commands for tasks such as file navigation, web searches, and leveraging generative AI for contextual responses (Divine Mode). This project was designed and developed as part of the final year curriculum at VIT.
-
----
-
-## Features
-
-### Gesture Recognition
-- **Cursor Control:** Move the mouse pointer using hand movements.
-- **Click Operations:** Perform left, right, and double clicks with specific finger gestures.
-- **Scrolling:** Scroll vertically and horizontally using pinch gestures.
-- **Drag and Drop:** Use a fist gesture to click and drag items.
-- **System Controls:** Adjust system volume and screen brightness using pinch gestures with the dominant hand.
-- **Multi-Hand Distinction:** Differentiates between Major (default: Right) and Minor (default: Left) hands for different gesture functionalities.
-
-### Voice Assistant (Krishna)
-- **Launch/Stop Gesture Recognition**: Voice commands to control the gesture recognition module.
-- **Google Search & Navigation**: Initiate web searches or locate places using Google Maps.
-- **File Navigation**: List and open files or directories.
-- **Date and Time Inquiry**: Respond with current date and time.
-- **Copy & Paste Operations**: Keyboard shortcuts triggered by voice.
-- **Sleep/Wake Up Commands**: Control the assistant's active listening state.
-- **Divine Mode (GenAI Integration)**: Leverage Google Gemini Flash for generative AI responses including screenshot analysis and description.
+**KrishnaVision** is a touchless Human-Computer Interaction (HCI) framework designed to control desktop interfaces through real-time computer vision and multimodal intelligence. By coupling optimized **MediaPipe** 21-point hand landmark tracking with a custom conversational agent powered by **Google Gemini AI**, KrishnaVision provides a dual-modality interaction layer for full mouse operations, desktop automation, system telemetry adjustments, and on-screen visual reasoning.
 
 ---
 
-## Prerequisites
+## 📄 Research Paper & Citation
 
-- **Python Version:** 3.9.21
-- **Operating System:** Windows (with required modules like `pywin32`, `pycaw`, `screen_brightness_control`)
-- **Tools:** Anaconda Distribution (recommended for environment management)
-- **Hardware:**
-  - Webcam for gesture recognition
-  - Microphone for voice input
+Published in the *International Journal of Innovative Research in Technology (IJIRT)*, Vol. 12, Issue 1 (2025).
 
----
+> **KrishnaVision: A Multimodal Virtual Interface Combining MediaPipe-Hands Optimization and Gemini AI for Context-Aware HCI**  
+> *R. De and A. Saha*  
+> [Read the full paper on IJIRT](https://ijirt.org/article?manuscript=180711)
 
-## Installation
-
-### Clone the Repository
-
-Clone this repository to your local machine:
-```bash
-git clone https://github.com/halcyon-past/Glide-Connect.git
+### BibTeX Citation
+```bibtex
+@article{de2025krishnavision,
+  title={KrishnaVision: A Multimodal Virtual Interface Combining MediaPipe-Hands Optimization and Gemini AI for Context-Aware HCI},
+  author={De, Rupkatha and Saha, Aritro},
+  journal={International Journal of Innovative Research in Technology (IJIRT)},
+  volume={12},
+  number={1},
+  pages={2909--2917},
+  year={2025},
+  url={https://ijirt.org/article?manuscript=180711}
+}
 ```
-For detailed instructions on cloning, visit [GitHub's documentation](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository).
-
-### Environment Setup
-
-1. **Create a Conda Environment:**
-   ```bash
-   conda create --name gesture python=3.9.21
-   ```
-2. **Activate the Environment:**
-   ```bash
-   conda activate gesture
-   ```
-3. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **Install pywin32:**
-   ```bash
-   conda install pywin32
-   ```
-
-### Configuration
-
-1. **Set up Gemini API Key:**
-   - Navigate to the `src` directory.
-   - Create a `.env` file with the following content:
-     ```bash
-     GEMINI_API_KEY=<YOUR_GEMINI_API_KEY>
-     GEMINI_MODEL_NAME=<YOUR_GEMINI_MODEL_NAME>
-     ```
-     > Currently i am using "gemini-2.0-flash-lite" as my model since it is cheap and fast
-   - To generate a Gemini API Key, visit [Google AI Studio](https://aistudio.google.com/apikey).
-
-2. **Navigate to the `src` Folder:**
-   - Open your terminal and change the directory to the `src` folder:
-     ```bash
-     cd path/to/your/repo/src
-     ```
 
 ---
 
-## Usage
+## 📐 System Architecture
 
-### Running the Voice Assistant
-To launch the integrated voice assistant (which also allows controlling gesture recognition via voice):
-```bash
-python Voice_Assistant.py
+```mermaid
+flowchart TD
+    subgraph Vision Pipeline ["🖐️ Vision Pipeline"]
+        Cam[Webcam Feed] --> MP[MediaPipe 21-Point Landmark Detection]
+        MP --> HandClassifier{Hand Differentiation}
+        HandClassifier -->|Major Hand| DominantGestures[Cursor Tracking & Click Actions]
+        HandClassifier -->|Minor Hand| SecondaryGestures[2D Dynamic Scrolling]
+        DominantGestures --> SystemAction[PyAutoGUI / PyCAW / Screen API]
+        SecondaryGestures --> SystemAction
+    end
+
+    subgraph Voice & Multimodal Pipeline ["🎙️ Multimodal Voice Pipeline"]
+        Mic[Microphone Input] --> STT[Speech Recognition Engine]
+        STT --> IntentRouter{Intent Classification}
+        IntentRouter -->|System Commands| OSExec[File Nav / Media / Volume / App Launcher]
+        IntentRouter -->|Divine Mode| ScreenCapture[Desktop Screenshot Capture]
+        ScreenCapture --> GeminiAPI[Google Gemini Flash Multimodal Engine]
+        GeminiAPI --> TTS[Speech Synthesis Response]
+    end
+
+    SystemAction --> OS[Windows OS Workspace]
+    OSExec --> OS
+    TTS --> User([User Experience])
 ```
-The assistant will greet you and display a chat interface. You can interact via voice or by typing in the chat window. The gesture control window will open automatically if launched via voice command ("launch gesture recognition").
-
-### Running Only Gesture Recognition
-To run gesture recognition independently without the voice assistant:
-```bash
-python Gesture_Controller.py
-```
-This will open a window showing the camera feed with hand landmarks. Press `Enter` in the OpenCV window to close it.
 
 ---
 
-## Voice Commands
+## 🚀 Key Features
 
-Interact with the Krishna assistant using the following voice commands. You can also type these commands into the chat interface.
+### 1. Vision-Based Gesture Controller
+- **Dual-Hand Disambiguation:** Distinguishes between the Major hand (dominant) and Minor hand (auxiliary) for contextual multi-action execution.
+- **Sub-Pixel Cursor Tracking:** Normalized coordinates scaled to display boundaries with smoothing buffers to eliminate jitter.
+- **Full Click Matrix:** Dedicated stable gestures for single-click, double-click, and right-click without false positives.
+- **Fist Drag & Drop:** Intuitive fist clench to lock mouse-down, drag across virtual workspaces, and release.
+- **Continuous 2D Scrolling:** Minor hand pinch-and-glide enables vertical and horizontal viewport navigation.
+- **Hardware Telemetry Control:** Pinch distance scaling for direct real-time master volume and display brightness modulation.
 
-* **`hello`**
-    * **Action:** Greets the user based on the current time.
-    * **Example:** "Krishna, hello"
-* **`what is your name`**
-    * **Action:** States its name.
-    * **Example:** "Krishna, what is your name?"
-* **`date` / `time`**
-    * **Action:** Replies with the current date or time.
-    * **Example:** "Krishna, what's the date?" / "Krishna, tell me the time"
-* **`location`**
-    * **Action:** Asks for a place, then opens Google Maps.
-    * **Example:** "Krishna, find a location" -> (Assistant asks) -> User: "Paris"
-* **`search [query]`**
-    * **Action:** Performs a Google search.
-    * **Example:** "Krishna, search for generative AI"
-* **`copy` / `paste`**
-    * **Action:** Simulates Ctrl+C or Ctrl+V.
-    * **Example:** "Krishna, copy this" / "Krishna, paste here"
-* **`launch gesture recognition`**
-    * **Action:** Starts the gesture controller module.
-    * **Example:** "Krishna, launch gesture recognition"
-* **`stop gesture recognition`**
-    * **Action:** Stops the gesture controller module.
-    * **Example:** "Krishna, stop gesture recognition"
-* **`list` / `open [number]` / `back`**
-    * **Action:** Navigates the file system starting from `C://`. `list` shows files/folders, `open [number]` opens the item, `back` goes to the parent directory.
-    * **Example:** "Krishna, list" -> "Krishna, open 2" -> "Krishna, go back"
-* **`enter divine mode` / `exit divine mode`**
-    * **Action:** Enters/exits mode for querying the Gemini AI.
-    * **Example:** "Krishna, enter divine mode" -> (Ask question) -> "Exit divine mode"
-* **`look at my screen`** (In Divine Mode)
-    * **Action:** Takes screenshot, asks for prompt, sends both to Gemini.
-    * **Example:** "Look at my screen" -> (Assistant asks) -> User: "What does this error message mean?"
-* **`bye` / `wake up`**
-    * **Action:** Puts the assistant to sleep / wakes it up.
-    * **Example:** "Krishna, bye" -> (Later) -> "Krishna, wake up"
-* **`exit`**
-    * **Action:** Shuts down the assistant application.
-    * **Example:** "Krishna, exit now"
+### 2. Conversational Voice Agent ("Krishna")
+- **Hands-Free Module Control:** Voice commands to launch, calibrate, and terminate the vision tracking worker.
+- **Intelligent File System Navigation:** Directory traversal, file indexing, and file opening using simple spoken indices.
+- **Divine Mode (Multimodal Contextual Reasoning):** One-shot screen analysis powered by Google Gemini — capture desktop states, error dialogs, or documents and ask conversational questions about what is on screen.
+- **Desktop Automation:** Voice-triggered copy/paste, quick Google and Maps queries, system sleep/wake states, and time utilities.
 
 ---
 
-## Hand Gesture Controls
+## 🖐️ Gesture Control Reference
 
-Control your computer using hand gestures detected by the webcam. The system differentiates between your **Major hand** (dominant, default: Right) and **Minor hand** (non-dominant, default: Left). A window titled 'Gesture Controller' shows the camera feed and detected landmarks. *Note: Gestures require holding the pose for a few frames (~4) for stability before triggering an action.*
+| Gesture | Hand | Action | Description |
+| :--- | :--- | :--- | :--- |
+| **Open Palm / Neutral** | Either | **Idle / Reset** | Default neutral state; resets click readiness flags. |
+| **'V' Sign (Index + Middle Up)** | Major | **Move Cursor** | Smooth cursor navigation across the active monitor. |
+| **Middle Finger Lowered (Index Up)** | Major | **Left Click** | Triggers standard primary mouse click. |
+| **Index Finger Lowered (Middle Up)** | Major | **Right Click** | Triggers secondary context menu click. |
+| **Tips Pinched Together ('V' Sign)** | Major | **Double Click** | Triggers instantaneous double click. |
+| **Closed Fist** | Major | **Drag & Drop** | Holds left mouse button down; release palm to drop. |
+| **Pinch Glide (Vertical / Horizontal)** | Minor | **Scroll Viewport** | Up/down vertical scroll; left/right horizontal scroll. |
+| **Pinch Glide (Vertical / Horizontal)** | Major | **Volume & Brightness** | Vertical movement modulates volume; horizontal modulates brightness. |
 
-* **Neutral (Palm / Other)**
-    * **Gesture:** Open hand (palm facing camera) or any unrecognized gesture.
-    * **Action:** No action. Resets states like "ready-to-click". The cursor does not move in this state.
-    * **Hand:** Either
-
-* **Move Cursor / Ready (V Gesture)**
-    * **Gesture:** Extend Index and Middle fingers ('V' sign), keep others closed.
-    * **Action:** Moves the mouse cursor according to hand movement. Sets the system to a "ready" state for click actions.
-    * **Hand:** Major
-
-* **Drag (Fist)**
-    * **Gesture:** Close all fingers into a fist.
-    * **Action:** Simulates holding down the left mouse button. Move the fist to drag. Releasing the fist (e.g., opening to Palm) releases the mouse button.
-    * **Hand:** Major
-
-* **Left Click (Middle Finger after V)**
-    * **Gesture:** Start with the V Gesture (Index and Middle up). Lower the Index finger, leaving only the Middle finger extended.
-    * **Action:** Performs a single left mouse click. Resets the "ready" state.
-    * **Hand:** Major
-
-* **Right Click (Index Finger after V)**
-    * **Gesture:** Start with the V Gesture. Lower the Middle finger, leaving only the Index finger extended.
-    * **Action:** Performs a single right mouse click. Resets the "ready" state.
-    * **Hand:** Major
-
-* **Double Click (Closed V after V)**
-    * **Gesture:** Start with the V Gesture. Bring the tips of the Index and Middle fingers close together while keeping them extended.
-    * **Action:** Performs a double left mouse click. Resets the "ready" state.
-    * **Hand:** Major
-
-* **Scroll (Minor Hand Pinch)**
-    * **Gesture:** Bring the tips of the Thumb and Index finger close together (pinch).
-    * **Action:**
-        * Moving the pinched hand **vertically** scrolls the active window up or down.
-        * Moving the pinched hand **horizontally** scrolls the active window left or right (simulates Shift + Scroll).
-    * **Hand:** Minor
-
-* **System Control (Major Hand Pinch)**
-    * **Gesture:** Bring the tips of the Thumb and Index finger close together (pinch).
-    * **Action:**
-        * Moving the pinched hand **vertically** increases (up) or decreases (down) the system volume.
-        * Moving the pinched hand **horizontally** increases (right) or decreases (left) the screen brightness.
-    * **Hand:** Major
+> *Note: A 4-frame temporal pose stability buffer is applied to avoid accidental gesture triggers during fast movements.*
 
 ---
 
-## Project Structure
+## 🎙️ Spoken Voice Commands
 
-```
+| Category | Spoken Prompt | System Action |
+| :--- | :--- | :--- |
+| **Module Control** | `"launch gesture recognition"` | Boots the OpenCV & MediaPipe tracking thread. |
+| | `"stop gesture recognition"` | Gracefully shuts down computer vision tracking. |
+| **Divine Mode (GenAI)** | `"enter divine mode"` | Activates Google Gemini contextual agent. |
+| | `"look at my screen"` | Captures screen buffer and answers queries via Gemini Vision. |
+| | `"exit divine mode"` | Returns to standard assistant mode. |
+| **File Navigation** | `"list"` | Lists directories in current working path. |
+| | `"open [number]"` | Opens corresponding file or enters subdirectory. |
+| | `"back"` | Traverses to parent directory. |
+| **Productivity** | `"search [query]"` | Spawns browser with Google Search query. |
+| | `"location"` | Prompts for target destination and opens Google Maps. |
+| | `"copy"` / `"paste"` | Injects `Ctrl+C` or `Ctrl+V` system keystrokes. |
+| **Lifecycle** | `"bye"` / `"wake up"` | Puts assistant to standby / resumes listening. |
+| | `"exit"` | Shuts down Krishna voice runtime. |
+
+---
+
+## 🛠️ Project Structure
+
+```text
 ├── README.md
 ├── requirements.txt
-├── .env                  # Contains GEMINI_API_KEY
-├── src
-│   ├── Voice_Assistant.py   # Main entry for voice assistant and integration.
-│   ├── Gesture_Controller.py # Handles gesture detection and control logic.
-│   ├── GenAI.py             # Integration with Google Gemini generative AI.
-│   ├── app.py               # Eel-based GUI for the chat interface.
-│   ├── web/                 # Contains the files for the UI of the chatbot
-│   └── logs/                # Contains logs of the chatbot
+├── LICENSE
+├── .env.example
+└── src/
+    ├── Voice_Assistant.py      # Core voice engine, intent parser & speech loop
+    ├── Gesture_Controller.py    # MediaPipe hand pipeline & virtual mouse driver
+    ├── GenAI.py                 # Gemini Flash integration (multimodal & text)
+    ├── app.py                   # Eel web-based interface bridge
+    ├── web/                     # Frontend UI assets for conversational GUI
+    └── logs/                    # Runtime telemetry & conversational history
 ```
 
-- **Voice_Assistant.py:** Combines voice recognition, GUI interaction, and calls other modules.
-- **Gesture_Controller.py:** Implements hand gesture detection using MediaPipe and maps gestures to `pyautogui`, `pycaw`, and `screen_brightness_control` actions.
-- **GenAI.py:** Manages API interactions with Google Gemini.
-- **app.py:** Provides the graphical user interface using Eel.
+---
+
+## ⚡ Quickstart & Installation
+
+### Prerequisites
+- **Python:** 3.9.21 (Recommended: Anaconda / Miniconda)
+- **OS:** Windows 10 / 11 (requires `pywin32`, `pycaw`, `screen_brightness_control`)
+- **Peripherals:** Standard webcam & microphone
+
+### 1. Clone & Set Up Virtual Environment
+
+```bash
+git clone https://github.com/halcyon-past/Glide-Connect.git
+cd Glide-Connect
+
+# Create conda environment
+conda create -n krishnavision python=3.9.21 -y
+conda activate krishnavision
+
+# Install dependencies
+pip install -r requirements.txt
+conda install pywin32 -y
+```
+
+### 2. Configure Environment Variables
+
+Create a `.env` file in the `src/` directory:
+
+```bash
+cd src
+cat <<EOF > .env
+GEMINI_API_KEY=your_google_gemini_api_key_here
+GEMINI_MODEL_NAME=gemini-2.0-flash-lite
+EOF
+```
+*(Get your free API key at [Google AI Studio](https://aistudio.google.com/apikey))*
+
+### 3. Launch the Application
+
+* **Full Multimodal Assistant (Voice + Gesture on demand):**
+  ```bash
+  python Voice_Assistant.py
+  ```
+
+* **Standalone Gesture Recognition:**
+  ```bash
+  python Gesture_Controller.py
+  ```
+  *(Press `Enter` inside the camera preview window to terminate).*
 
 ---
 
-## Future Enhancements
+## 👥 Authors & Research Team
 
-- **Multi-Language Support:** Extend voice commands to support additional languages.
-- **Customizable Gestures:** Allow users to define or modify gesture mappings.
-- **Performance Optimization:** Fine-tune gesture detection and controller responsiveness.
-- **Cross-Platform Compatibility:** Adapt system controls (volume, brightness) for macOS/Linux.
-- **User Personalization:** Save user preferences (e.g., dominant hand, sensitivity).
-
----
-
-## Contributors
-<a href="https://github.com/halcyon-past/Glide-Connect/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=halcyon-past/Glide-Connect" />
-</a>
+| Name | Role & Links |
+| :--- | :--- |
+| **Aritro Saha** | [![GitHub](https://img.shields.io/badge/GitHub-halcyon--past-181717?logo=github)](https://github.com/halcyon-past) [![LinkedIn](https://img.shields.io/badge/LinkedIn-aritro--saha-0A66C2?logo=linkedin)](https://www.linkedin.com/in/aritro-saha/) [![YouTube](https://img.shields.io/badge/YouTube-@veripyed-FF0000?logo=youtube)](https://www.youtube.com/@veripyed) |
+| **Rupkatha De** | [![GitHub](https://img.shields.io/badge/GitHub-rupkatha--de-181717?logo=github)](https://github.com/rupkatha-de) [![LinkedIn](https://img.shields.io/badge/LinkedIn-rupkatha--de-0A66C2?logo=linkedin)](https://www.linkedin.com/in/rupkatha-de-80a422231/) |
+| **Anusmita Panji** | [![LinkedIn](https://img.shields.io/badge/LinkedIn-anusmita--panji-0A66C2?logo=linkedin)](https://www.linkedin.com/in/anusmita-panji-a509551b5) |
 
 ---
 
-## Contributing
+## 📜 License
 
-Contributions are welcome! If you would like to contribute to this project:
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/YourFeature`).
-3. Commit your changes (`git commit -m 'Add Your Feature'`).
-4. Push to the branch (`git push origin feature/YourFeature`).
-5. Open a pull request.
-
-Please adhere to the project’s coding conventions and document your changes thoroughly.
-
----
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## Acknowledgements
-
-- **MediaPipe:** For providing the hand tracking framework.
-- **Google Gemini:** For the generative AI capabilities.
-- **PyAutoGUI, PyCAW, screen-brightness-control:** For enabling system interaction.
-- **Open Source Community:** For the many libraries and tools used.
-
-# Team
-  | Name | Github  | Email | Linkedin | Instagram | Youtube |
-  | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |
-  | Aritro Saha | [GitHub](https://github.com/halcyon-past) | [Email](mailto:titanssuperior@gmail.com) | [LinkedIn](https://www.linkedin.com/in/aritro-saha/) | [Instagram](https://www.instagram.com/halcyon_past/) | [Youtube](https://www.youtube.com/@veripyed) |
-  | Rupkatha De | [GitHub](https://github.com/rupkatha-de) | [Email](mailto:derupkatha@gmail.com) | [LinkedIn](https://www.linkedin.com/in/rupkatha-de-80a422231/) | [Instagram](https://www.instagram.com/rupkatha_26/) | NA |
-  | Anusmita Panji | NA | [Email](mailto:kolianusmita@gmail.com) | [LinkedIn](https://www.linkedin.com/in/anusmita-panji-a509551b5) | [Instagram](https://www.instagram.com/anusmitap_21/) | NA |
+This project is licensed under the [MIT License](LICENSE).
